@@ -1,0 +1,17 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body{
+    background: linear-gradient(rgba(0,0,0,0.2),rgba(0,0,0,0.2)), url('/first.jpg') ;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}
+
+::-webkit-scrollbar{
+    width: 7px;
+}
+::-webkit-scrollbar-thumb{
+    background: rgb(110, 109, 109);
+}
