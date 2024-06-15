@@ -1,3 +1,4 @@
+import axios from "axios";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 
@@ -16,17 +17,11 @@ function useGetConversations (){
 			setLoading(true);
 			try {
 				const token = localStorage.getItem('token');
-				const res = await fetch("http://localhost:3000/api/users", {
-					method: "POST",
-					headers: {
-						'Content-Type': 'application/json',
-					},
-					body: JSON.stringify({ token })
-				});
-				const data = await res.json();
-				if (data.error) {
-					throw new Error(data.error);
-				}
+				const res = await axios.post("/users", {token});
+				const data = res.data;
+				if(res.error)	throw new Error(data.error);
+				console.log("GET Conversation",res);
+				
 				setConversations(data);
 
 			} catch (error) {

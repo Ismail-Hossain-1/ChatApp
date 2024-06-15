@@ -12,9 +12,13 @@ const getMessages = async (req, res) => {
 
         const conversation= await Conversation.findOne({
             participants:{$all:[senderId, userToChatId]},
-        }).populate('messages')
+        }).populate('messages');
 
-        res.status(200).json(conversation);
+        if (!conversation) return res.status(200).json([]);
+
+		const messages = conversation.messages;
+
+        res.status(200).json(messages);
 
     } catch (error) {
         console.log(error);
@@ -46,9 +50,9 @@ const sendMessage = async (req, res) => {
         }
 
         const newMessage = new Message({
-            senderId: senderId,
-            receiverId: receiverId,
-            message: message
+             senderId,
+             receiverId,
+             message
         });
 
         if (newMessage) {
@@ -56,8 +60,9 @@ const sendMessage = async (req, res) => {
         };
 
 
-        await  conversation.save();
-        await newMessage.save();
+        // await  conversation.save();
+        // await newMessage.save();
+        await Promise.all([conversation.save(), newMessage.save()]);
 
         const receiverSocketId= getReceiverSocketId(receiverId);
 

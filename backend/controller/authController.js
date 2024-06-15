@@ -17,6 +17,7 @@ const login = async (req, res) => {
         if (!checkPass) return res.status(400).json({ error: "Password does not match" });
 
        const token= generateToken(user._id);
+      // console.log(user);
 
         res.status(201).json({
             _id: user._id,

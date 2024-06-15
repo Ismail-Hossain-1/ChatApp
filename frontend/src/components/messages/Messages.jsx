@@ -7,14 +7,15 @@ import useListenMessages from '../../hooks/useListenMessages';
 function Messages() {
 
   const { loading, messages } = useGetMessages();
-  
-  const allmessages = [messages.messages];
+
+  //const allmessages = messages.messages||[];
   // console.log(allmessages.length);
   useListenMessages();
+  
+ // console.log(messages);
 
 
-
-  if (messages.length===0 || allmessages.length===0) {
+  if (messages.length === 0 || !messages) {
     return (
       <div className='px-4 flex-1 overflow-auto'>
         {[...Array(3)].map((_, idx) => (
@@ -30,8 +31,8 @@ function Messages() {
 
 
       {!loading &&
-        messages.messages.length > 0 &&
-        messages.messages.map((message) => (
+        messages?.length > 0 &&
+        messages.map((message) => (
           <div key={message._id} >
             <Message message={message} />
 

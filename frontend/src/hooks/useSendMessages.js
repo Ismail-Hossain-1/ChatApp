@@ -1,6 +1,7 @@
 import {useState} from 'react'
 import useConversation from '../zustand/useConversation';
 import toast from 'react-hot-toast';
+import axios from 'axios';
 
 const useSendMessages = () => {
 
@@ -14,16 +15,11 @@ const useSendMessages = () => {
         const token= localStorage.getItem('token');
 
         try {
-            const res = await fetch(`http://localhost:3000/api/messages/send/${selectedConversation._id}`, {
-                method: "POST",
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({message, token})
-            });
-           
-            console.log(res);
-
-            const data = await res.json();
+            
+            const res= await axios.post(`/messages/send/${selectedConversation._id}`, {message, token});
+            const data= await res.data;
             setMessages([...messages, data]);
+
             if (data.error) throw new Error(data.error);
 
             

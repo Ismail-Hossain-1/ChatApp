@@ -12,13 +12,10 @@ function useSignup() {
 
         setLoading(true);
         try {
-            const response= await fetch('http://localhost:3000/api/auth/signup', {
-                method:"POST",
-                headers: {'Content-Type':'application/json'},
-                body: JSON.stringify({name, username, password, confirmpassword, gender})
-            });
+            const response= await axios.post('/auth/signup', {name, username, password, confirmpassword, gender});
 
-            const data = await response.json();
+            //const data = await response.json();
+            const data= response.data;
 
             if(data.error){
                 throw new Error(data.error);

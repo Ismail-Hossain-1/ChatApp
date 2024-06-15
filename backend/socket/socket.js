@@ -4,9 +4,11 @@ const express= require('express');
 const app= express();
 
 const http = require('http').createServer(app);
+
 const io = require('socket.io')(http, {
     cors: {
         origin: "http://localhost:5173", // Allow connection from React app origin
+        methods: ["GET", "POST"],
     }
 });
 

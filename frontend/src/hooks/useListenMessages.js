@@ -3,22 +3,24 @@ import { useSocketContext } from '../context/socketContext'
 import useConversation from '../zustand/useConversation';
 
 const useListenMessages = () => {
-  
-    const {socket}= useSocketContext();
 
-    const {messages, setMessages} = useConversation();
+    const { socket } = useSocketContext();
 
-    useEffect(()=>{
+    const { messages, setMessages } = useConversation();
 
-        socket?.on("newMessage", (newMessage)=>{
-            setMessages([messages, newMessage])
-        })
+    useEffect(() => {
 
-    },[socket, messages, setMessages]);
+        socket?.on("newMessage", (newMessage) => {
 
-    return ()=>{
-        socket?.off('newMessage');
-    }
+            setMessages([...messages, newMessage]);
+        });
+        return () => {
+            socket?.off('newMessage');
+        }
+
+    }, [socket, messages, setMessages]);
+
+
 }
 
 export default useListenMessages
