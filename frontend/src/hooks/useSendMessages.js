@@ -9,15 +9,20 @@ const useSendMessages = () => {
     const { messages, setMessages, selectedConversation } = useConversation();
     //console.log(selectedConversation._id);
 
-    const sendMessage = async (message) => {
+    const sendMessage = async (formData) => {
         setLoading(true);
 
-        const token= localStorage.getItem('token');
+       // const token= localStorage.getItem('token');
 
         try {
             
-            const res= await axios.post(`/messages/send/${selectedConversation._id}`, {message, token});
-            const data= await res.data;
+            const res= await axios.post(`/messages/send/${selectedConversation._id}`, formData,{
+                headers:{
+                     'Content-Type': 'multipart/form-data'
+                }
+            });
+            const data= res.data;
+            console.log(res);
             setMessages([...messages, data]);
 
             if (data.error) throw new Error(data.error);

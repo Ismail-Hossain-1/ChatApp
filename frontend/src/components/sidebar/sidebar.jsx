@@ -7,7 +7,7 @@ function Sidebar() {
   return (
     <div>
 
-        <SearchInput/>
+        {/* <SearchInput/> */}
         <div className='divider px-3'></div>
         <Conversations/>
         

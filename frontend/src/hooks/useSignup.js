@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import toast from 'react-hot-toast';
 import { useAuthContext } from '../context/authContext';
+import axios from 'axios';
 
 function useSignup() {
     const[loading, setLoading]= useState(false);
